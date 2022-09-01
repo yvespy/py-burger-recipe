@@ -30,13 +30,7 @@ def test_validator_is_abstract():
 
 
 def test_validate_is_abstract_method():
-    class TestAbstract(Validator):
-        def test_method(self):
-            pass
-
-    with pytest.raises(TypeError):
-        TestAbstract()
-        pytest.fail(msg="validate should be the abstract method")
+    assert "validate" in Validator.__abstractmethods__
 
 
 @pytest.mark.parametrize(
