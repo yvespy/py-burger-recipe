@@ -1,3 +1,14 @@
-# TODO: add initial code
-def hello_world():
-    return "Hello, world!"
+class Validator:
+    pass
+
+
+class Number:
+    pass
+
+
+class OneOf:
+    pass
+
+
+class BurgerRecipe:
+    pass
