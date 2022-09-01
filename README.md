@@ -8,20 +8,22 @@ You work at the In-N-Out and make delicious burgers.
 Create the `BurgerRecipe` class, its constructor should take and save the number of ingredients needed to make a burger, such as cheese, tomatoes, cutlets, eggs, buns, and sauce.
 
 ```python
-cheese_burger = Burger(chesse=2, tomatoes=1, cutlets=1, eggs=1, buns=2, sauce="ketchup")
+cheese_burger = Burger(buns=2, chesse=2, tomatoes=1, cutlets=1, eggs=1, sauce="ketchup")
 ```
 
-But, because the number of ingredients should be a whole number and it can range, it would be convenient to use descriptors here.
+But, because the number of ingredients should be a whole number that can range, and sauce can be one of three it would be convenient to use descriptors here.
 
-So, the quantity can range:
+So, the quantity and sauce can range:
+- `buns` - from 2 to 3;
 - `cheese` - from 0 to 2;
 - `tomatoes` - from 0 to 3;
 - `cutlets` - from 1 to 3;
 - `eggs` - from 0 to 2;
-- `buns` - from 2 to 3;
 - `sauce` - can be ketchup, mayo, or burger.
 
-Your task is to create the `Validator` descriptor, which should be an abstract class with methods:
+The main task is to create the `BurgerRecipe` class, and for convenience you should consider such descriptors.
+
+The `Validator` class that should have such methods:
 
 - the `__set_name__` method, which takes the name of the attribute, adds `_` to its beginning and stores it in the `protected_name` attribute;
 - the `__get__` method that returns the attribute value;
@@ -39,16 +41,16 @@ Last but not least, you need to implement the `OneOf` validator which is child c
 - the `validate` method which takes `value` and checks if it’s one of the provided options and if not - raises the `ValueError` with the message `Expected {value} to be one of {self.options}.`
 
 ```python
-burger = BurgerRecipe(cheese="1", tomatoes="1", cutlets="1", eggs="1", buns="1", sauce="mayo")
+burger = BurgerRecipe(buns="1", cheese="1", tomatoes="1", cutlets="1", eggs="1", sauce="mayo")
  # TypeError: Quantity should be integer.
 
-burger = BurgerRecipe(cheese=10, tomatoes=1, cutlets=1, eggs=1, buns=1, sauce="mayo")
+burger = BurgerRecipe(buns=1, cheese=10, tomatoes=1, cutlets=1, eggs=1, sauce="mayo")
  # ValueError: Quantity should not be less than 0 and greater than 2.
 
-burger = BurgerRecipe(cheese=1, tomatoes=1, cutlets=1, eggs=1, buns=2, sauce="mustard") 
+burger = BurgerRecipe(buns=2, cheese=1, tomatoes=1, cutlets=1, eggs=1, sauce="mustard") 
 # ValueError: Expected mustard to be one of ('ketchup', 'mayo', 'burger').
 
-burger = BurgerRecipe(cheese=1, tomatoes=1, cutlets=1, eggs=1, buns=2, sauce="ketchup")
+burger = BurgerRecipe(buns=2, cheese=1, tomatoes=1, cutlets=1, eggs=1, sauce="ketchup")
 # burger will be created
 ```
 

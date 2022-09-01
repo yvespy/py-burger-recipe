@@ -7,16 +7,15 @@ from app.main import Validator, BurgerRecipe
 
 @pytest.mark.parametrize(
     "ingredients",
-    [[0, 0, 1, 0, 2, "ketchup"],
-     [1, 2, 2, 1, 2, "mayo"],
-     [2, 3, 3, 2, 3, "burger"]],
+    [[2, 0, 0, 1, 0, "ketchup"],
+     [2, 1, 2, 2, 1, "mayo"],
+     [3, 2, 3, 3, 2, "burger"]],
 )
 def test_burger_consists_of_right_ingredients(ingredients):
     burger = BurgerRecipe(*ingredients)
-    components = ["cheese", "tomatoes", "cutlets", "eggs", "buns", "sauce"]
+    components = ["buns", "cheese", "tomatoes", "cutlets", "eggs", "sauce"]
     assert [getattr(burger, component) for component in components] == ingredients, (
-        f"'burger' ingredients 'cheese', 'tomatoes', 'cutlets', 'eggs', "
-        f"'buns', 'sauce' should equal to {ingredients}, "
+        f"'burger' ingredients {' '.join(components)} should equal to {ingredients}, "
         f"when 'burger' is created by 'BurgerRecipe(*{ingredients})'"
     )
 
@@ -41,16 +40,11 @@ def test_validate_is_abstract_method():
 
 
 @pytest.mark.parametrize(
-    "ingredient,attrs",
-    [
-        ("cheese", {"min_value", "max_value", "protected_name"}),
-        ("tomatoes", {"min_value", "max_value", "protected_name"}),
-        ("cutlets", {"min_value", "max_value", "protected_name"}),
-        ("eggs", {"min_value", "max_value", "protected_name"}),
-        ("buns", {"min_value", "max_value", "protected_name"}),
-    ],
+    "ingredient",
+    ["cheese", "tomatoes", "cutlets", "eggs", "buns"],
 )
-def test_number_instance_has_attrs(ingredient, attrs):
+def test_number_instance_has_attrs(ingredient):
+    attrs = {"min_value", "max_value", "protected_name"}
     assert attrs.issubset(
         set(BurgerRecipe.__dict__[ingredient].__dict__.keys())
     ), f"Descriptor Number for {ingredient} should have such attributes {attrs}"
@@ -84,7 +78,7 @@ def test_validator_protected_name(attr, protected_attr):
     "ingredient", ["_cheese", "_tomatoes", "_cutlets", "_eggs", "_buns", "_sauce"]
 )
 def test_ingredients_in_dir_burger(ingredient):
-    burger = BurgerRecipe(1, 1, 1, 1, 2, "ketchup")
+    burger = BurgerRecipe(2, 1, 1, 1, 1, "ketchup")
     assert ingredient in burger.__dict__, (
         f"'burger' should have protected attribute {ingredient} "
         "if 'burger' is instance of BurgerRecipe"
@@ -95,12 +89,7 @@ def test_ingredients_in_dir_burger(ingredient):
     "ingredients",
     [
         ["1", 1, 1, 1, 2, "ketchup"],
-        [1.3, 1, 1, 1, 2, "ketchup"],
-        [(1,), 1, 1, 1, 2, "ketchup"],
-        [[1], 1, 1, 1, 2, "ketchup"],
         [lambda x: x, 1, 1, 1, 2, "ketchup"],
-        [{1}, 1, 1, 1, 2, "ketchup"],
-        [{"1": 1}, 1, 1, 1, 2, "ketchup"],
         [ValueError, 1, 1, 1, 2, "ketchup"],
         [None, 1, 1, 1, 2, "ketchup"],
     ],
@@ -115,28 +104,28 @@ def test_incorrect_type_of_ingredient(ingredients):
 
 def test_incorrect_type_of_sauce():
     with pytest.raises(ValueError) as e:
-        BurgerRecipe(1, 1, 1, 1, 2, "mustard")
+        BurgerRecipe(2, 1, 1, 1, 1, "mustard")
     assert (
         str(e.value) == "Expected mustard to be one of ('ketchup', 'mayo', 'burger')."
     ), "Text of the 'ValueError' should equal to 'Expected mustard to be one of ('ketchup', 'mayo', 'burger')."
 
 
 @pytest.mark.parametrize(
-    "ingredients, attr",
+    "ingredients",
     [
-        ([-1, 1, 1, 1, 2, "ketchup"], "cheese"),
-        ([3, 1, 1, 1, 2, "ketchup"], "cheese"),
-        ([1, -1, 1, 1, 2, "ketchup"], "tomatoes"),
-        ([1, 4, 1, 1, 2, "ketchup"], "tomatoes"),
-        ([1, 1, 0, 1, 2, "ketchup"], "cutlets"),
-        ([1, 1, 4, 1, 2, "ketchup"], "cutlets"),
-        ([1, 1, 1, -1, 2, "ketchup"], "eggs"),
-        ([1, 1, 1, 3, 2, "ketchup"], "eggs"),
-        ([1, 1, 1, 1, 1, "ketchup"], "buns"),
-        ([1, 1, 1, 1, 4, "ketchup"], "buns"),
+        [4, 1, 1, 1, 1, "ketchup"],
+        [1, 1, 1, 1, 1, "ketchup"],
+        [2, -1, 1, 1, 1, "ketchup"],
+        [2, 3, 1, 1, 1, "ketchup"],
+        [2, 1, -1, 1, 1, "ketchup"],
+        [2, 1, 4, 1, 1, "ketchup"],
+        [2, 1, 1, 0, 1, "ketchup"],
+        [2, 1, 1, 4, 1, "ketchup"],
+        [2, 1, 1, 1, -1, "ketchup"],
+        [2, 1, 1, 1, 3, "ketchup"],
     ],
 )
-def test_ingredient_out_of_range(ingredients, attr):
+def test_ingredient_out_of_range(ingredients):
     with pytest.raises(ValueError):
         BurgerRecipe(*ingredients)
         pytest.fail(msg="Text of the 'ValueError' should equal to "
