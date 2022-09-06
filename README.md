@@ -11,15 +11,17 @@ Create the `BurgerRecipe` class, its constructor should take and save the number
 cheese_burger = Burger(buns=2, chesse=2, tomatoes=1, cutlets=1, eggs=1, sauce="ketchup")
 ```
 
-But, because the number of ingredients should be a whole number that can range, and sauce can be one of three it would be convenient to use descriptors here.
+You can make burgers with different number of ingredients and different sauces, for example:
 
-So, the quantity and sauce can range:
-- `buns` - from 2 to 3;
-- `cheese` - from 0 to 2;
-- `tomatoes` - from 0 to 3;
-- `cutlets` - from 1 to 3;
-- `eggs` - from 0 to 2;
+- `buns` - can range from 2 to 3;
+- `cheese` - can range from 0 to 2;
+- `tomatoes` - can range from 0 to 3;
+- `cutlets` - can range from 1 to 3;
+- `eggs` - can range from 0 to 2;
 - `sauce` - can be ketchup, mayo, or burger.
+
+So, it would be convenient to use descriptors to make sure that number of ingredients is `int` 
+and sauce is one of ketchup, mayo, or burger.
 
 The main task is to create the `BurgerRecipe` class, and for convenience you should consider such descriptors.
 
