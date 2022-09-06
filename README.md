@@ -20,7 +20,7 @@ You can make burgers with different number of ingredients and different sauces, 
 - `eggs` - can range from 0 to 2;
 - `sauce` - can be ketchup, mayo, or burger.
 
-So, it would be convenient to use descriptors to make sure that number of ingredients is `int` 
+So, it would be convenient to use descriptors to make sure that number of ingredients is `int` in a range mentioned above
 and sauce is one of ketchup, mayo, or burger.
 
 The main task is to create the `BurgerRecipe` class, and for convenience you should consider such descriptors.
