@@ -8,7 +8,7 @@ You work at the **In-N-Out** and make delicious burgers.
 Create the `BurgerRecipe` class. Its constructor should accept and save the number of ingredients needed to make a burger, such as cheese, tomatoes, cutlets, eggs, buns, and sauce.
 
 ```python
-cheese_burger = Burger(buns=2, chesse=2, tomatoes=1, cutlets=1, eggs=1, sauce="ketchup")
+cheese_burger = Burger(buns=2, cheese=2, tomatoes=1, cutlets=1, eggs=1, sauce="ketchup")
 ```
 
 You can make burgers with a different number of ingredients and different sauces, for example:
