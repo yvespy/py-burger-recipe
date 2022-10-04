@@ -47,7 +47,7 @@ burger = BurgerRecipe(buns="1", cheese="1", tomatoes="1", cutlets="1", eggs="1",
  # TypeError: Quantity should be integer.
 
 burger = BurgerRecipe(buns=1, cheese=10, tomatoes=1, cutlets=1, eggs=1, sauce="mayo")
- # ValueError: Quantity should not be less than 0 and greater than 2.
+ # ValueError: Quantity should not be less than 2 and greater than 3.
 
 burger = BurgerRecipe(buns=2, cheese=1, tomatoes=1, cutlets=1, eggs=1, sauce="mustard") 
 # ValueError: Expected mustard to be one of ('ketchup', 'mayo', 'burger').
